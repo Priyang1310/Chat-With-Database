@@ -16,7 +16,7 @@ const lightTheme = {
   sidebarBackground: '#fff',
   sidebarText: '#000',
   sidebarHoverBackground: '#e0e0e0',
-  headerBackground: '#f8f9fa'
+  headerBackground: '#f8f9fa',
 };
 
 const darkTheme = {
@@ -32,19 +32,19 @@ const darkTheme = {
   sidebarBackground: '#20232a',
   sidebarText: '#fff',
   sidebarHoverBackground: '#333',
-  headerBackground: '#343a40'
+  headerBackground: '#343a40',
 };
 
 const AppContainer = styled.div`
   display: flex;
   height: 100vh;
-  background-color: ${props => props.theme.background};
-  color: ${props => props.theme.textColor};
+  background-color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Sidebar = styled.div`
   width: 250px;
-  background-color: ${props => props.theme.sidebarBackground};
+  background-color: ${(props) => props.theme.sidebarBackground};
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -58,12 +58,12 @@ const SidebarItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: ${props => props.theme.sidebarText};
+  color: ${(props) => props.theme.sidebarText};
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: ${props => props.theme.sidebarHoverBackground};
-    color: ${props => props.theme.textColor};
+    background-color: ${(props) => props.theme.sidebarHoverBackground};
+    color: ${(props) => props.theme.textColor};
   }
 `;
 
@@ -75,19 +75,19 @@ const ChatContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.chatBackground};
+  background-color: ${(props) => props.theme.chatBackground};
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 `;
 
 const ChatHeader = styled.div`
-  background-color: ${props => props.theme.headerBackground};
+  background-color: ${(props) => props.theme.headerBackground};
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid ${props => props.theme.inputBorder};
+  border-bottom: 1px solid ${(props) => props.theme.inputBorder};
 `;
 
 const ChatTitle = styled.h1`
@@ -106,8 +106,9 @@ const MessagesContainer = styled.div`
 
 const Message = styled.div`
   padding: 15px;
-  background-color: ${props => (props.isUser ? props.theme.userMessageBackground : props.theme.responseMessageBackground)};
-  align-self: ${props => (props.isUser ? 'flex-end' : 'flex-start')};
+  background-color: ${(props) =>
+    props.isUser ? props.theme.userMessageBackground : props.theme.responseMessageBackground};
+  align-self: ${(props) => (props.isUser ? 'flex-end' : 'flex-start')};
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 60%;
@@ -116,29 +117,29 @@ const Message = styled.div`
 const InputContainer = styled.div`
   display: flex;
   padding: 10px;
-  border-top: 1px solid ${props => props.theme.inputBorder};
+  border-top: 1px solid ${(props) => props.theme.inputBorder};
 `;
 
 const Input = styled.input`
   flex: 1;
   padding: 10px;
-  background-color: ${props => props.theme.inputBackground};
-  border: 1px solid ${props => props.theme.inputBorder};
+  background-color: ${(props) => props.theme.inputBackground};
+  border: 1px solid ${(props) => props.theme.inputBorder};
   border-radius: 20px;
   margin-right: 10px;
-  color: ${props => props.theme.textColor};
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Button = styled.button`
   padding: 10px 20px;
-  background-color: ${props => props.theme.buttonBackground};
-  color: ${props => props.theme.textColor};
+  background-color: ${(props) => props.theme.buttonBackground};
+  color: ${(props) => props.theme.textColor};
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: ${props => props.theme.buttonHoverBackground};
+    background-color: ${(props) => props.theme.buttonHoverBackground};
   }
 `;
 
@@ -157,9 +158,9 @@ const App = () => {
       setInput('');
       // Simulate a response from ChatGPT (you can replace this with an actual API call)
       setTimeout(() => {
-        setMessages(prevMessages => [
+        setMessages((prevMessages) => [
           ...prevMessages,
-          { id: uuidv4(), text: 'This is a response from ChatGPT', isUser: false }
+          { id: uuidv4(), text: 'This is a response from ChatGPT', isUser: false },
         ]);
       }, 1000);
     }
@@ -169,19 +170,23 @@ const App = () => {
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <AppContainer>
         <Sidebar>
-          <ToggleButton onClick={() => setIsDarkTheme(prev => !prev)}>
-            Toggle Theme
-          </ToggleButton>
+          <ToggleButton onClick={() => setIsDarkTheme((prev) => !prev)}>Toggle Theme</ToggleButton>
           <SidebarItem>
-            <SidebarIcon><FaHome /></SidebarIcon>
+            <SidebarIcon>
+              <FaHome />
+            </SidebarIcon>
             Home
           </SidebarItem>
           <SidebarItem>
-            <SidebarIcon><FaCommentDots /></SidebarIcon>
+            <SidebarIcon>
+              <FaCommentDots />
+            </SidebarIcon>
             Chat
           </SidebarItem>
           <SidebarItem>
-            <SidebarIcon><FaCog /></SidebarIcon>
+            <SidebarIcon>
+              <FaCog />
+            </SidebarIcon>
             Settings
           </SidebarItem>
         </Sidebar>
@@ -190,7 +195,7 @@ const App = () => {
             <ChatTitle>ChatGPT</ChatTitle>
           </ChatHeader>
           <MessagesContainer>
-            {messages.map(message => (
+            {messages.map((message) => (
               <Message key={message.id} isUser={message.isUser}>
                 {message.text}
               </Message>
@@ -199,8 +204,8 @@ const App = () => {
           <InputContainer>
             <Input
               value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && handleSend()}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Type your message..."
             />
             <Button onClick={handleSend}>Send</Button>
