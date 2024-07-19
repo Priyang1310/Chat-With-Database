@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { useAuth0 } from '@auth0/auth0-react';
 import { v4 as uuidv4 } from 'uuid';
-import { FaHome, FaCommentDots, FaCog } from 'react-icons/fa';
-
+import {
+  FaHome,
+  FaCommentDots,
+  FaCog,
+  FaUserCircle,
+  FaSignOutAlt,
+  FaCaretDown,
+} from 'react-icons/fa';
+import { curr_context } from '../contexts/Central';
 const lightTheme = {
   background: '#f0f0f0',
   chatBackground: '#fff',
@@ -86,13 +94,41 @@ const ChatHeader = styled.div`
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.inputBorder};
 `;
 
-const ChatTitle = styled.h1`
-  margin: 0;
-  font-size: 24px;
+const Logo = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: ${(props) => props.theme.chatBackground};
+  border: 1px solid ${(props) => props.theme.inputBorder};
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+`;
+
+const DropdownItem = styled.div`
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${(props) => props.theme.inputBackground};
+  }
+`;
+
+const LogoutItem = styled(DropdownItem)`
+  color: orange;
 `;
 
 const MessagesContainer = styled.div`
@@ -147,11 +183,13 @@ const ToggleButton = styled(Button)`
   margin-bottom: 20px;
 `;
 
-const Main = () => {
+const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { user } = useContext(curr_context);
+  const { logout } = useAuth0();
   const handleSend = () => {
     if (input.trim()) {
       setMessages([...messages, { id: uuidv4(), text: input, isUser: true }]);
@@ -164,6 +202,10 @@ const Main = () => {
         ]);
       }, 1000);
     }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
   };
 
   return (
@@ -192,7 +234,38 @@ const Main = () => {
         </Sidebar>
         <ChatContainer>
           <ChatHeader>
-            <ChatTitle>ChatGPT</ChatTitle>
+            <div></div>
+            <Logo onClick={toggleDropdown}>
+              {user && user.picture ? (
+                <img
+                  src={user.picture}
+                  alt="Logo"
+                  style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+                />
+              ) : (
+                <img
+                  src="path/to/default/image.png"
+                  alt="Default Logo"
+                  style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+                />
+              )}
+
+              <FaCaretDown />
+              {dropdownOpen && (
+                <DropdownMenu>
+                  <DropdownItem>
+                    <FaUserCircle /> Profile
+                  </DropdownItem>
+                  <LogoutItem
+                    onClick={() =>
+                      logout({ logoutParams: { returnTo: 'http://localhost:5173/landing' } })
+                    }
+                  >
+                    <FaSignOutAlt /> Logout
+                  </LogoutItem>
+                </DropdownMenu>
+              )}
+            </Logo>
           </ChatHeader>
           <MessagesContainer>
             {messages.map((message) => (
@@ -216,4 +289,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Chatbot;

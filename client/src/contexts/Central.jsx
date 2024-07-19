@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { fetcher } from "src/hooks/Fetcher";
 export const curr_context = createContext();
 
 export default function Central(props) {
@@ -24,7 +23,6 @@ export default function Central(props) {
         set_user(body)
       }
     })()
-
   } , [google_user])
   return (
     <>

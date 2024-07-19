@@ -1,9 +1,10 @@
 import React from 'react'
-import Main from './components/Main'
+import Main from './sections/chatbot'
+import { Router } from './routes/sections'
 
 const App = () => {
   return (
-    <Main/>
+      <Router />
   )
 }
 
