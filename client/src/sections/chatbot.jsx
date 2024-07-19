@@ -243,11 +243,7 @@ const Chatbot = () => {
                   style={{ width: '30px', height: '30px', borderRadius: '50%' }}
                 />
               ) : (
-                <img
-                  src="path/to/default/image.png"
-                  alt="Default Logo"
-                  style={{ width: '30px', height: '30px', borderRadius: '50%' }}
-                />
+                <FaUserCircle size={30} />
               )}
 
               <FaCaretDown />
