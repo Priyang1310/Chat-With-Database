@@ -12,7 +12,7 @@ const Landing = () => {
       <div className={`min-h-screen ${styles.bgNoise} flex items-center justify-center`}>
         <div className="text-center">
           <h1 className="text-white text-5xl md:text-7xl font-bold mb-6">
-            Welcome<span className='animate-pulse' style={{color:"aqua"}}> librariarn</span>
+            Welcome to <span className='animate-pulse' style={{color:"aqua"}}> Chat with Database</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-2xl mb-12">
             Discover the amazing features and join our community today!
