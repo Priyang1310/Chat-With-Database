@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { curr_context } from '../contexts/Central';
 
 import Landing from '../sections/landing';
-import Chatbot from '../sections/chatbot';
+import Chatbot from '../Chatbot';
 
  function Router() {
   const now_context = useContext(curr_context);

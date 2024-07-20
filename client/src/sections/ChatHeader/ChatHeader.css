@@ -1,0 +1,56 @@
+.chat-header {
+  padding: 10px 20px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
+  border-bottom: 1px solid var(--input-border);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  margin-left: 95%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.logo-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.dropdown-menu1 {
+  height: 100px;
+  width: 200px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: var(--input-background);
+}
+
+.logout {
+  color: orange;
+}

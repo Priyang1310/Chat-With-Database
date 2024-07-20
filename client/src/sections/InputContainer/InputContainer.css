@@ -1,0 +1,27 @@
+.input-container {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+}
+input{
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+.input {
+  flex: 1;
+  padding: 7px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.button:hover {
+  background-color: var(--button-hover-background);
+}
