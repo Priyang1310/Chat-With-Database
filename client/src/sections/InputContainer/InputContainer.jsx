@@ -1,62 +1,39 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './InputContainer.css';
 import { MdSend } from 'react-icons/md';
 import { GrMicrophone } from 'react-icons/gr';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const InputContainer = ({ input, setInput, handleSend, theme }) => {
   const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef(null);
 
-  if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
+  const {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
     console.error('Speech recognition is not supported by this browser.');
-  } else {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognitionRef.current = new SpeechRecognition();
-  }
-
-  const recognition = recognitionRef.current;
-  if (recognition) {
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    return null;
   }
 
   const startListening = () => {
-    if (recognition) {
-      recognition.start();
-      setIsListening(true);
-    }
+    SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
+    setIsListening(true);
   };
 
   const stopListening = () => {
-    if (recognition) {
-      recognition.stop();
-      setIsListening(false);
-    }
+    SpeechRecognition.stopListening();
+    setIsListening(false);
   };
 
-  if (recognition) {
-    recognition.onresult = (event) => {
-      let interimTranscript = '';
-      let finalTranscript = input;
-
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript;
-        } else {
-          interimTranscript += transcript;
-        }
-      }
-
-      setInput(finalTranscript + interimTranscript);
-    };
-
-    recognition.onerror = (event) => {
-      console.error(event.error);
-      stopListening();
-    };
-  }
+  React.useEffect(() => {
+    setInput(finalTranscript + interimTranscript);
+  }, [finalTranscript, interimTranscript]);
 
   return (
     <div className="main-container" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -93,16 +70,16 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               cursor: 'pointer',
             }}
             onClick={isListening ? stopListening : startListening}
-            />
-        <MdSend
-          className="button"
-          style={{
-            color: theme.textColor,
-            marginRight: '0.3rem',
-          }}
-          onClick={handleSend}
           />
-          </div>
+          <MdSend
+            className="button"
+            style={{
+              color: theme.textColor,
+              marginRight: '0.3rem',
+            }}
+            onClick={handleSend}
+          />
+        </div>
       </div>
     </div>
   );
