@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './InputContainer.css';
 import { MdSend } from 'react-icons/md';
 import { GrMicrophone } from 'react-icons/gr';
+import { FaStop } from 'react-icons/fa';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const InputContainer = ({ input, setInput, handleSend, theme }) => {
@@ -13,7 +14,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     finalTranscript,
     listening,
     resetTranscript,
-    browserSupportsSpeechRecognition
+    browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
@@ -31,7 +32,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     setIsListening(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setInput(finalTranscript + interimTranscript);
   }, [finalTranscript, interimTranscript]);
 
@@ -62,15 +63,27 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               color: theme.textColor,
             }}
           />
-          <GrMicrophone
-            className="button"
-            style={{
-              color: theme.textColor,
-              marginRight: '0.4rem',
-              cursor: 'pointer',
-            }}
-            onClick={isListening ? stopListening : startListening}
-          />
+          {!isListening ? (
+            <GrMicrophone
+              className="button"
+              style={{
+                color: theme.textColor,
+                marginRight: '0.4rem',
+                cursor: 'pointer',
+              }}
+              onClick={startListening}
+            />
+          ) : (
+            <FaStop
+              className="button"
+              style={{
+                color: theme.textColor,
+                marginRight: '0.4rem',
+                cursor: 'pointer',
+              }}
+              onClick={stopListening}
+            />
+          )}
           <MdSend
             className="button"
             style={{
