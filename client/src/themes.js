@@ -6,8 +6,8 @@ export const lightTheme = {
     inputBorder: '#ddd',
     buttonBackground: '#007bff',
     buttonHoverBackground: '#0056b3',
-    userMessageBackground: '#d1e7dd',
-    responseMessageBackground: '#f8d7da',
+    userMessageBackground: '#F4F4F4',
+    responseMessageBackground: '#fff',
     sidebarBackground: '#fff',
     sidebarText: '#000',
     sidebarHoverBackground: '#e0e0e0',
@@ -16,17 +16,17 @@ export const lightTheme = {
   
   export const darkTheme = {
     background: '#181818',
-    chatBackground: '#282c34',
+    chatBackground: '#212121',
     textColor: '#fff',
-    inputBackground: '#282c34',
+    inputBackground: '#212121',
     inputBorder: '#555',
     buttonBackground: '#61dafb',
     buttonHoverBackground: '#21a1f1',
-    userMessageBackground: '#4caf50',
-    responseMessageBackground: '#f44336',
+    userMessageBackground: '#2F2F2F',
+    responseMessageBackground: '#212121',
     sidebarBackground: '#20232a',
     sidebarText: '#fff',
     sidebarHoverBackground: '#333',
-    headerBackground: '#343a40',
+    headerBackground: '#212121',
   };
   

@@ -17,7 +17,7 @@ const MessagesContainer = ({ messages, theme }) => {
     <div className="messages-container">
       {user && (
         <>
-          <div style={{display:"flex",flexDirection:"column",justifyContent:'center',alignItems:"flex-start",textAlign:"left",margin:"auto",marginTop:'4rem'}}>
+          <div style={{display:"flex",flexDirection:"column",justifyContent:'center',alignItems:"flex-start",textAlign:"left",margin:"auto",marginTop:'4rem',marginBottom:'15rem'}}>
             <h1 className="gradient-text">Hello,{user.name.split(' ')[0]}</h1>
             <h1 style={{ fontSize: '3rem', color: 'lightgray' }}>
               Let's Start Chatting With Your Database.

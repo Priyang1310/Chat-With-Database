@@ -33,6 +33,7 @@ const Chatbot = () => {
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <AppContainer theme={isDarkTheme ? darkTheme : lightTheme}>
         <Sidebar theme={isDarkTheme ? darkTheme : lightTheme} setIsDarkTheme={setIsDarkTheme} />
+    
         <ChatContainer
           theme={isDarkTheme ? darkTheme : lightTheme}
           messages={messages}

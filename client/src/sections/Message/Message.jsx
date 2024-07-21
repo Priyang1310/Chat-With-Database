@@ -8,6 +8,7 @@ const Message = ({ message, theme }) => {
       style={{
         backgroundColor: message.isUser ? theme.userMessageBackground : theme.responseMessageBackground,
         alignSelf: message.isUser ? 'flex-end' : 'flex-start',
+
       }}
     >
       {message.text}
