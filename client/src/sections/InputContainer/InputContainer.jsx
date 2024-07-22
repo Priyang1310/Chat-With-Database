@@ -123,6 +123,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
             <option value="hi-IN">Hindi</option>
             <option value="gu-IN">Gujarati</option>
           </select>
+          {isListening && <div className="analog-signal"></div>}
           <GrMicrophone
             className="button"
             style={{
@@ -132,6 +133,11 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
             }}
             onClick={isListening ? stopListening : startListening}
           />
+          {isListening && (
+            <button className="stop-button" onClick={stopListening}>
+              Stop
+            </button>
+          )}
           <MdSend
             className="button"
             style={{
