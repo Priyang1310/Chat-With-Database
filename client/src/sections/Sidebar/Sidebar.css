@@ -25,3 +25,43 @@
 .sidebar-icon {
   margin-right: 10px;
 }
+
+.dropdown {
+  margin-left: 20px; /* Indent dropdown items */
+  background-color: var(--sidebar-background); /* Adjust according to your theme */
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px; /* Limit height if there are many items */
+  overflow-y: auto; /* Add scrolling if needed */
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  background-color: var(--sidebar-background); /* Adjust according to your theme */
+  color: var(--sidebar-text); /* Adjust according to your theme */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--sidebar-hover-background); /* Adjust according to your theme */
+}
+
+/* Scrollbar styling */
+.dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdown::-webkit-scrollbar-track {
+  background: var(--sidebar-background);
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+  background: var(--input-border);
+  border-radius: 5px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--button-hover-background);
+}
