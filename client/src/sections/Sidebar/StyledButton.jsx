@@ -241,6 +241,8 @@ const ButtonWithModal = ({ theme }) => {
     }
   };
 
+  
+
   return (
     <CenteredContainer style={{ backgroundColor: theme.sidebarBackground, height: '7rem' }}>
       <SidebarButton

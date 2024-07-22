@@ -6,7 +6,8 @@ import ButtonWithModal from './StyledButton';
 import { curr_context } from '../../contexts/Central';
 
 const Sidebar = ({ theme, setIsDarkTheme, isDarkTheme }) => {
-  const { tables, setSelectedCollection ,isMySQL, sqlObj, mongodbObj} = useContext(curr_context);
+  const { tables, setSelectedCollection, isMySQL, sqlObj, mongodbObj } =
+    useContext(curr_context);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -20,15 +21,13 @@ const Sidebar = ({ theme, setIsDarkTheme, isDarkTheme }) => {
     // setColl(table);
     // print(table)
 
-    const url = isMySQL
-      ? "http://127.0.0.1:5000/mysql/connect"
-      : "http://127.0.0.1:5000/connect";
+    const url = isMySQL ? 'http://127.0.0.1:5000/mysql/connect' : 'http://127.0.0.1:5000/connect';
 
     try {
       const response = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...sqlObj,
@@ -40,18 +39,25 @@ const Sidebar = ({ theme, setIsDarkTheme, isDarkTheme }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Connection successful and data fetched", data);
+        console.log('Connection successful and data fetched', data);
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData.error);
+        console.error('Error:', errorData.error);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", backgroundColor: theme.sidebarBackground }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        backgroundColor: theme.sidebarBackground,
+      }}
+    >
       <div className="sidebar">
         <ToggleButton onClick={() => setIsDarkTheme((prev) => !prev)} />
         <div className="sidebar-item" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
@@ -59,9 +65,13 @@ const Sidebar = ({ theme, setIsDarkTheme, isDarkTheme }) => {
           Collections
         </div>
         {isDropdownVisible && (
-          <div className="dropdown" style={{background:theme.userMessageBackground}}>
+          <div className="dropdown" style={{ background: theme.userMessageBackground }}>
             {tables.map((table, index) => (
-              <div key={index} className="dropdown-item" onClick={() => handleDropdownItemClick(table)}>
+              <div
+                key={index}
+                className="dropdown-item"
+                onClick={() => handleDropdownItemClick(table)}
+              >
                 {table}
               </div>
             ))}

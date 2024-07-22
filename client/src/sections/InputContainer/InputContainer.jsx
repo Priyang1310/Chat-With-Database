@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './InputContainer.css';
 import { MdSend } from 'react-icons/md';
 import { GrMicrophone } from 'react-icons/gr';
+import { curr_context } from '../../contexts/Central';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const InputContainer = ({ input, setInput, handleSend, theme }) => {
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState('en-US'); // Default language
+
+  const { isMySQL, selectedCollection } = useContext(curr_context);
 
   const {
     transcript,
@@ -14,7 +17,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     finalTranscript,
     listening,
     resetTranscript,
-    browserSupportsSpeechRecognition
+    browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
@@ -48,8 +51,39 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     setInput(''); // Reset the input field after sending the message
   };
 
+  const handleQuerySubmit = async (query) => {
+    const url = isMySQL ? 'http://127.0.0.1:5000/aski' : 'http://127.0.0.1:5000/ask';
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+          table: selectedCollection,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.response);
+        // setResponses(data.response.split('\n') || []); // Ensure responses is always an array
+      } else {
+        const errorData = await response.json();
+        console.error('Error:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <div className="main-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div
+      className="main-container"
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
       <div
         className="input-container"
         style={{ borderTop: `1px solid ${theme.inputBorder}`, marginBottom: '1rem', width: '100%' }}
@@ -67,7 +101,6 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
             className="input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Type your message..."
             style={{
               border: 'none',
@@ -83,13 +116,14 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               padding: '0.5rem',
               borderRadius: '4px',
               border: 'none',
-              outline: 'none'
+              outline: 'none',
             }}
           >
             <option value="en-US">English</option>
             <option value="hi-IN">Hindi</option>
             <option value="gu-IN">Gujarati</option>
           </select>
+          {isListening && <div className="analog-signal"></div>}
           <GrMicrophone
             className="button"
             style={{
@@ -99,13 +133,18 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
             }}
             onClick={isListening ? stopListening : startListening}
           />
+          {isListening && (
+            <button className="stop-button" onClick={stopListening}>
+              Stop
+            </button>
+          )}
           <MdSend
             className="button"
             style={{
               color: theme.textColor,
               marginRight: '0.3rem',
             }}
-            onClick={handleSendMessage}
+            onClick={() => handleQuerySubmit(input)}
           />
         </div>
       </div>
