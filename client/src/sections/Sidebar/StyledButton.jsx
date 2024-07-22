@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { FaPlus } from "react-icons/fa";
-
+import { FaPlus } from 'react-icons/fa';
+import { curr_context } from '../../contexts/Central';
 const CenteredContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@ const CenteredContainer = styled.div`
   background-color: #f0f0f0;
 `;
 
-const StyledButton = styled.button`
+const SidebarButton = styled.button`
   padding: 12px 24px;
   background-color: #007bff;
   color: #fff;
@@ -63,7 +63,7 @@ const ModalContent = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 12px;
-  margin: 20px 0;
+  margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
@@ -94,9 +94,41 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const ButtonWithModal = ({theme,isDarkTheme}) => {
+const ChoiceButton = styled.button`
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+`;
+
+const ButtonWithModal = ({ theme }) => {
   const [showModal, setShowModal] = useState(false);
-  const [connectionString, setConnectionString] = useState('');
+  const [dbType, setDbType] = useState('');
+  const { setTables, setMySQL, setSqlObj, setMongodbObj } = useContext(curr_context);
+  const [formData, setFormData] = useState({
+    mongodbUrl: '',
+    mongodbDatabaseName: '',
+    mysqlHost: '',
+    mysqlUser: '',
+    mysqlPassword: '',
+    mysqlDatabase: '',
+  });
+
+  const [mongourl, setMongoUrl] = useState('');
+  const [mongoDB, setDbName] = useState('');
+  const [host, setHost] = useState('');
+  const [user, setUser] = useState('');
+  const [password, setPwd] = useState('');
+  const [sqlDB, setsqlDB] = useState('');
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -104,33 +136,211 @@ const ButtonWithModal = ({theme,isDarkTheme}) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setDbType('');
+    setFormData({
+      mongodbUrl: '',
+      mongodbDatabaseName: '',
+      mysqlHost: '',
+      mysqlUser: '',
+      mysqlPassword: '',
+      mysqlDatabase: '',
+    });
+  };
+
+  const handleChoice = (type) => {
+    setDbType(type);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Connection string: ${connectionString}`);
-    // Add logic to use the connection string as needed
+    if (dbType === 'MongoDB') {
+      handleMongoSubmit(formData);
+    } else {
+      handleMySQLSubmit(formData);
+    }
+    console.log(`Connection string details for ${dbType}:`, formData);
+    // Add logic to use the connection details as needed
     handleCloseModal();
   };
 
+  const handleMongoSubmit = async (formData) => {
+    setMongoUrl(formData.mongodbUrl);
+    setDbName(formData.mongodbDatabaseName);
+    setMongodbObj({
+      url: formData.mongodbUrl,
+      database: formData.mongodbDatabaseName,
+    });
+    try {
+      const response = await fetch('http://127.0.0.1:5000/collections', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mongo_url: formData.mongodbUrl,
+          db_name: formData.mongodbDatabaseName,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setTables(data.collections || []);
+        // setCollections(data.collections || []); // Ensure collections is always an array
+      } else {
+        const errorData = await response.json();
+        console.error('Error:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleMySQLSubmit = async (formData) => {
+    // const mysqlConfig = { host, user, password };
+    // setMysqlConfig(mysqlConfig);
+    // setOpen(false);
+    setSqlObj({
+      host:formData.mysqlHost,
+      user:formData.mysqlUser,
+      password:formData.mysqlPassword,
+      database:formData.mysqlDatabase,
+    })
+    try {
+      const response = await fetch('http://127.0.0.1:5000/mysql/tables', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          host:formData.mysqlHost,
+          user:formData.mysqlUser,
+          password:formData.mysqlPassword,
+          database:formData.mysqlDatabase,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setTables(data.tables || []);
+        // setCollections(data.tables || []); // Ensure tables is always an array
+      } else {
+        const errorData = await response.json();
+        console.error('Error:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <CenteredContainer style={{backgroundColor:theme.sidebarBackground,height:"7rem"}}>
-      <StyledButton onClick={handleOpenModal} style={{display:"flex",justifyContent:"center",alignItems:"center", gap:"10px"}}><FaPlus />Add Connection URL</StyledButton>
-      <ModalBackground  show={showModal} onClick={handleCloseModal}>
-        <ModalContent style={{backgroundColor:theme.sidebarBackground}} onClick={(e) => e.stopPropagation()}>
+    <CenteredContainer style={{ backgroundColor: theme.sidebarBackground, height: '7rem' }}>
+      <SidebarButton
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px' }}
+        onClick={handleOpenModal}
+      >
+        <FaPlus /> Add Connection URL
+      </SidebarButton>
+      <ModalBackground show={showModal} onClick={handleCloseModal}>
+        <ModalContent
+          style={{ backgroundColor: theme.sidebarBackground }}
+          onClick={(e) => e.stopPropagation()}
+        >
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
-          <h2>Enter Database Connection String</h2>
-          <form onSubmit={handleSubmit}>
-            <Input
-              type="text"
-              style={{color:theme.textColor,backgroundColor:theme.sidebarBackground}}
-              value={connectionString}
-              onChange={(e) => setConnectionString(e.target.value)}
-              placeholder="MongoDB Connection String"
-              required
-            />
-            <SubmitButton type="submit">Submit</SubmitButton>
-          </form>
+          <h2>Select Database Type</h2>
+          <ChoiceButton
+            onClick={() => {
+              handleChoice('MongoDB');
+              setMySQL(false);
+            }}
+          >
+            MongoDB
+          </ChoiceButton>
+          <ChoiceButton
+            onClick={() => {
+              handleChoice('MySQL');
+              setMySQL(true);
+            }}
+          >
+            MySQL
+          </ChoiceButton>
+          {dbType && (
+            <>
+              <h3>Enter {dbType} Connection Details</h3>
+              <form onSubmit={handleSubmit}>
+                {dbType === 'MongoDB' ? (
+                  <>
+                    <Input
+                      type="text"
+                      style={{ color: 'black' }}
+                      name="mongodbUrl"
+                      value={formData.mongodbUrl}
+                      onChange={handleInputChange}
+                      placeholder="MongoDB URL"
+                      required
+                    />
+                    <Input
+                      type="text"
+                      style={{ color: 'black' }}
+                      name="mongodbDatabaseName"
+                      value={formData.mongodbDatabaseName}
+                      onChange={handleInputChange}
+                      placeholder="MongoDB Database Name"
+                      required
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Input
+                      type="text"
+                      name="mysqlHost"
+                      style={{ color: 'black' }}
+                      value={formData.mysqlHost}
+                      onChange={handleInputChange}
+                      placeholder="MySQL Host"
+                      required
+                    />
+                    <Input
+                      type="text"
+                      name="mysqlUser"
+                      style={{ color: 'black' }}
+                      value={formData.mysqlUser}
+                      onChange={handleInputChange}
+                      placeholder="MySQL User"
+                      required
+                    />
+                    <Input
+                      type="password"
+                      name="mysqlPassword"
+                      style={{ color: 'black' }}
+                      value={formData.mysqlPassword}
+                      onChange={handleInputChange}
+                      placeholder="MySQL Password"
+                      required
+                    />
+                    <Input
+                      type="text"
+                      name="mysqlDatabase"
+                      style={{ color: 'black' }}
+                      value={formData.mysqlDatabase}
+                      onChange={handleInputChange}
+                      placeholder="MySQL Database"
+                      required
+                    />
+                  </>
+                )}
+                <SubmitButton type="submit">Submit</SubmitButton>
+              </form>
+            </>
+          )}
         </ModalContent>
       </ModalBackground>
     </CenteredContainer>

@@ -33,31 +33,23 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
   };
 
   useEffect(() => {
-    if (listening) {
-      setInput((prevInput) => prevInput + interimTranscript);
-    }
-  }, [interimTranscript]);
+    setInput(transcript);
+  }, [transcript, setInput]);
 
   useEffect(() => {
-    if (!listening) {
+    if (!listening && finalTranscript) {
       setInput((prevInput) => prevInput + finalTranscript);
       resetTranscript();
     }
-  }, [finalTranscript, listening, resetTranscript]);
+  }, [finalTranscript, listening, resetTranscript, setInput]);
+
+  const handleSendMessage = () => {
+    handleSend();
+    setInput(''); // Reset the input field after sending the message
+  };
 
   return (
     <div className="main-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div className="language-select-container" style={{ marginBottom: '1rem' }}>
-        <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-          style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
-        >
-          <option value="en-US">English</option>
-          <option value="hi-IN">Hindi</option>
-          <option value="gu-IN">Gujarati</option>
-        </select>
-      </div>
       <div
         className="input-container"
         style={{ borderTop: `1px solid ${theme.inputBorder}`, marginBottom: '1rem', width: '100%' }}
@@ -75,7 +67,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
             className="input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Type your message..."
             style={{
               border: 'none',
@@ -83,6 +75,21 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               color: theme.textColor,
             }}
           />
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            style={{
+              backgroundColor: theme.chatBackground,
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: 'none',
+              outline: 'none'
+            }}
+          >
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="gu-IN">Gujarati</option>
+          </select>
           <GrMicrophone
             className="button"
             style={{
@@ -98,7 +105,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               color: theme.textColor,
               marginRight: '0.3rem',
             }}
-            onClick={handleSend}
+            onClick={handleSendMessage}
           />
         </div>
       </div>

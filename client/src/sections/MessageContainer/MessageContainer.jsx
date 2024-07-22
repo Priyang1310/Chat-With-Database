@@ -4,6 +4,11 @@ import './MessageContainer.css';
 import { curr_context } from '../../contexts/Central';
 const MessagesContainer = ({ messages, theme }) => {
   const messagesEndRef = useRef(null);
+  const scrollbarStyle = {
+    '--scrollbar-track-color': theme.inputBackground,
+    '--scrollbar-thumb-color': theme.inputBorder,
+    '--scrollbar-thumb-hover-color': theme.inputBorder,
+  };
   const { user } = useContext(curr_context);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -14,7 +19,7 @@ const MessagesContainer = ({ messages, theme }) => {
   }, [messages]);
 
   return (
-    <div className="messages-container">
+    <div className="messages-container" style={scrollbarStyle}>
       {user && (
         <>
           <div style={{display:"flex",flexDirection:"column",justifyContent:'center',alignItems:"flex-start",textAlign:"left",margin:"auto",marginTop:'4rem',marginBottom:'15rem'}}>

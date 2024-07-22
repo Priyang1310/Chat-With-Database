@@ -1,12 +1,29 @@
 .messages-container {
   flex: 1;
-  padding: 16px;
+  padding: 0 12rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding:0 12rem ;
   gap: 10px;
 }
+
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 10px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
 .gradient-text {
   font-size: 5rem;
   background: #3494e6; /* fallback for old browsers */
@@ -16,8 +33,6 @@
     #ec6ead,
     #3494e6
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  /* background-image: linear-gradient(to right, blue, purple,red); /* Example gradient */
   background-clip: text; /* Clip the gradient to the text shape */
   -webkit-text-fill-color: transparent;
 }

@@ -7,6 +7,11 @@ export default function Central(props) {
   const [userid , set_userid] = useState(null)
   const [google_user , set_google_user] = useState(null) 
   const [user , set_user] = useState(null)
+  const [tables,setTables]=useState(['Books','Users']);
+  const [selectedCollection,setSelectedCollection]=useState('');
+  const [isMySQL,setMySQL]=useState(null);
+  const [mongodbObj,setMongodbObj]=useState({});
+  const [sqlObj,setSqlObj]=useState({});
   useEffect(()=>{
     console.log(google_user);
     (async()=>{
@@ -26,7 +31,7 @@ export default function Central(props) {
   } , [google_user])
   return (
     <>
-      <curr_context.Provider value={{backend_url , user , set_user  ,google_user , userid ,set_google_user}}>
+      <curr_context.Provider value={{backend_url , user , set_user  ,google_user , userid ,set_google_user,tables,setTables,selectedCollection,setSelectedCollection,isMySQL,setMySQL,setMongodbObj,mongodbObj,sqlObj,setSqlObj}}>
         {props.children}
       </curr_context.Provider>
     </>
