@@ -30,8 +30,8 @@ const MessagesContainer = ({ messages, theme }) => {
           </div>
         </>
       )}
-      {messages.map((message) => (
-        <Message key={message.id} message={message} theme={theme} />
+      {messages.map((message,index) => (
+        <Message key={index} message={message} theme={theme} />
       ))}
       <div ref={messagesEndRef} />
     </div>

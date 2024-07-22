@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  FaUserCircle,
-  FaSignOutAlt,
-  FaCaretDown,
-} from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt, FaCaretDown } from 'react-icons/fa';
 import {
   ChatHeader,
   Logo,
@@ -16,7 +12,7 @@ import {
   Message,
   InputContainer,
   Input,
-  Button
+  Button,
 } from './ChatStyles.jsx';
 
 const ChatContainer = ({ user, logout }) => {
@@ -32,7 +28,11 @@ const ChatContainer = ({ user, logout }) => {
       setTimeout(() => {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { id: uuidv4(), text: 'This is a response from ChatGPT', isUser: false },
+          {
+            id: uuidv4(),
+            text: 'Kindly add your database URL to start chatting with your database.',
+            isUser: false,
+          },
         ]);
       }, 1000);
     }

@@ -110,7 +110,7 @@ const ChoiceButton = styled.button`
   }
 `;
 
-const ButtonWithModal = ({ theme }) => {
+const ButtonWithModal = ({ theme,handleSend }) => {
   const [showModal, setShowModal] = useState(false);
   const [dbType, setDbType] = useState('');
   const { setTables, setMySQL, setSqlObj, setMongodbObj } = useContext(curr_context);
@@ -166,9 +166,10 @@ const ButtonWithModal = ({ theme }) => {
     } else {
       handleMySQLSubmit(formData);
     }
+    handleCloseModal();
+    handleSend('Connection successful. Please select the collections from the sidebar to have ask queries.',false)
     console.log(`Connection string details for ${dbType}:`, formData);
     // Add logic to use the connection details as needed
-    handleCloseModal();
   };
 
   const handleMongoSubmit = async (formData) => {

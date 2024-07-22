@@ -15,25 +15,29 @@ const Chatbot = () => {
   const { user } = useContext(curr_context);
   const { logout } = useAuth0();
 
-  const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { id: uuidv4(), text: input, isUser: true }]);
-      setInput('');
-      // Simulate a response from ChatGPT (you can replace this with an actual API call)
-      setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { id: uuidv4(), text: 'This is a response from ChatGPT', isUser: false },
-        ]);
-      }, 1000);
-    }
+  const handleSend = (message, isUser) => {
+    console.log(message + ' this is message');
+
+    // If there's input from the user, add it to the messages
+
+    // If there's a message passed to the function, add it to the messages
+    // if (message.trim()) {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { id: uuidv4(), text: message, isUser: isUser },
+    ]);
+    // }
   };
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <AppContainer theme={isDarkTheme ? darkTheme : lightTheme}>
-        <Sidebar theme={isDarkTheme ? darkTheme : lightTheme} setIsDarkTheme={setIsDarkTheme} />
-    
+        <Sidebar
+          theme={isDarkTheme ? darkTheme : lightTheme}
+          setIsDarkTheme={setIsDarkTheme}
+          handleSend={handleSend}
+        />
+
         <ChatContainer
           theme={isDarkTheme ? darkTheme : lightTheme}
           messages={messages}

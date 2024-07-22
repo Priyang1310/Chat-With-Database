@@ -69,6 +69,7 @@ const UserProfileModal = ({ isOpen, onClose }) => {
                     type="text"
                     id="editName"
                     value={editName}
+                    style={{color:"black"}}
                     onChange={(e) => setEditName(e.target.value)}
                     disabled
                   />
@@ -79,6 +80,7 @@ const UserProfileModal = ({ isOpen, onClose }) => {
                     type="text"
                     id="editPhone"
                     value={editPhone}
+                    style={{color:"black"}}
                     onChange={(e) => setEditPhone(e.target.value)}
                   />
                 </div>
@@ -88,6 +90,7 @@ const UserProfileModal = ({ isOpen, onClose }) => {
                     type="text"
                     id="editAddress"
                     value={editAddress}
+                    style={{color:"black"}}
                     onChange={(e) => setEditAddress(e.target.value)}
                   />
                 </div>

@@ -9,7 +9,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState('en-US'); // Default language
 
-  const { isMySQL, selectedCollection } = useContext(curr_context);
+  const { isMySQL, selectedCollection,beforeCall,setBeforeCall } = useContext(curr_context);
 
   const {
     transcript,
@@ -46,14 +46,21 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     }
   }, [finalTranscript, listening, resetTranscript, setInput]);
 
-  const handleSendMessage = () => {
-    handleSend();
-    setInput(''); // Reset the input field after sending the message
-  };
+  // const handleSendMessage = () => {
+  //   handleSend();
+  //   setInput(''); // Reset the input field after sending the message
+  // };
 
   const handleQuerySubmit = async (query) => {
+    if(!beforeCall){
+      handleSend(query,true);
+      handleSend('Kindly add Database URl...');
+      setInput('');
+      return;
+    }
+    handleSend(query,true);
+    setInput('');
     const url = isMySQL ? 'http://127.0.0.1:5000/aski' : 'http://127.0.0.1:5000/ask';
-
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -68,13 +75,16 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
 
       if (response.ok) {
         const data = await response.json();
+        handleSend(data.response,false);
         console.log(data.response);
         // setResponses(data.response.split('\n') || []); // Ensure responses is always an array
       } else {
         const errorData = await response.json();
+        handleSend(errorData.response,false);
         console.error('Error:', errorData.error);
       }
     } catch (error) {
+      handleSend(error,false);
       console.error('Error:', error);
     }
   };
