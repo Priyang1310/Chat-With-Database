@@ -129,20 +129,20 @@ The system architecture comprises:
 ## Screenshots
 
 ### Landing Page
-![Landing Page](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Landing-page.png)
+![Landing Page](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Landing-page.png)
 
 ### Authentication
-![Authentication](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Auth0.png)
+![Authentication](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Auth0.png)
 
 ### Chat Interface
-![Chat Interface](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Chat_Interface.png)
+![Chat Interface](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Chat_Interface.png)
 
 ### Profile Management
-![Profile Management](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/User_Profile.png)
+![Profile Management](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/User_Profile.png)
 
 ### Query Execution 
-![SQL Query Execution](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Query.png)
+![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Query.png)
 
 ### Query Execution in Light Theme
-![SQL Query Execution](https://raw.githubusercontent.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/White-Theme.png)
+![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/White-Theme.png)
 
