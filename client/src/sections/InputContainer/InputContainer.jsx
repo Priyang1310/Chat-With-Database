@@ -155,6 +155,7 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
               marginRight: '0.3rem',
             }}
             onClick={() => handleQuerySubmit(input)}
+            onKeyDown={()=>handleQuerySubmit(input)}
           />
         </div>
       </div>

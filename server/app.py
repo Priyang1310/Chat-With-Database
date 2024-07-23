@@ -66,6 +66,7 @@ def connect_and_fetch():
             df,
             allow_dangerous_code=True,
             verbose=True,
+            # handle_parsing_errors=True
         )
 
         return jsonify({"message": "Connection successful and data fetched"}), 200
