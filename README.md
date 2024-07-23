@@ -144,5 +144,5 @@ The system architecture comprises:
 ![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/Query.png)
 
 ### Query Execution in Light Theme
-![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/White-Theme.png)
+![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/blob/main/client/public/Screen_shots/White_Theme.png)
 
