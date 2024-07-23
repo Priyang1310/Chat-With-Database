@@ -125,3 +125,23 @@ The system architecture comprises:
 - **Advanced Analytics**: Add features for advanced data analytics and reporting.
 - **Improved UI/UX**: Enhance the user interface with more customization options and interactive elements.
 - **Real-time Collaboration**: Enable real-time collaboration features for multiple users.
+
+## Screenshots
+
+### Landing Page
+![Landing Page](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/Landing-page.png)
+
+### Authentication
+![Authentication](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/Auth0.png)
+
+### Chat Interface
+![Chat Interface](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/Chat_Interface.png)
+
+### Profile Management
+![Profile Management](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/User_Profile.png)
+
+### Query Execution 
+![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/Query.png)
+
+### Query Execution in Light Theme
+![SQL Query Execution](https://github.com/Priyang1310/Woodpecker/client/public/Screen_shots/White-Theme.png)
