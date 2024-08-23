@@ -31,7 +31,8 @@ const Sidebar = ({ theme, setIsDarkTheme, isDarkTheme,handleSend }) => {
     // setColl(table);
     // print(table)
 
-    const url = isMySQL ? 'http://127.0.0.1:5000/mysql/connect' : 'http://127.0.0.1:5000/connect';
+    // const url = isMySQL ? 'http://127.0.0.1:5000/mysql/connect' : 'http://127.0.0.1:5000/connect';
+    const url = isMySQL ? 'https://chat-with-database-api.vercel.app/mysql/connect' : 'https://chat-with-database-api.vercel.app/connect';
 
     try {
       const response = await fetch(url, {
