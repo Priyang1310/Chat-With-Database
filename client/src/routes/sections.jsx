@@ -20,7 +20,8 @@ import Chatbot from '../Chatbot';
   const routes = useRoutes([
     {
       path:"/",
-      element:<Chatbot/>
+      //element:<Chatbot/>
+      element:<Landing/>
     },
     {
       path: 'landing',
