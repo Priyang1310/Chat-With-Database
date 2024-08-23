@@ -42,7 +42,7 @@ const ChatHeader = ({ theme }) => {
             <div
               className="dropdown-item logout"
               onClick={() =>
-                logout({ logoutParams: { returnTo: 'https://chat-with-database.vercel.app/landing' } })
+                logout({ logoutParams: { returnTo: 'https://chat-with-database.vercel.app/' } })
               }
             >
               <FaSignOutAlt /> Logout
