@@ -32,7 +32,8 @@ agents = None
 my_agent = {}
 
 
-@app.route("/connect", methods=["POST"])
+# @app.route("/connect", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/connect", methods=["POST"])
 def connect_and_fetch():
     global dataframes, agents
     try:
@@ -74,7 +75,8 @@ def connect_and_fetch():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/collections", methods=["POST"])
+# @app.route("/collections", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/collections", methods=["POST"])
 def get_collections():
     try:
         mongo_url = request.json.get("mongo_url")
@@ -95,7 +97,8 @@ def get_collections():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/ask", methods=["POST"])
+# @app.route("/ask", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/ask", methods=["POST"])
 def ask_endpoint():
     global agents
     try:
@@ -122,7 +125,8 @@ def ask_endpoint():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/mysql/tables", methods=["POST"])
+# @app.route("/mysql/tables", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/mysql/tables", methods=["POST"])
 def mysql_tables():
     data = request.json
     host = data.get("host")
@@ -145,7 +149,8 @@ def mysql_tables():
         return jsonify({"error": str(err)}), 500
 
 
-@app.route("/mysql/connect", methods=["POST"])
+# @app.route("/mysql/connect", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/mysql/connect", methods=["POST"])
 def connect_mysql():
     global mysql_connections
     try:
@@ -188,7 +193,8 @@ def connect_mysql():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/aski", methods=["POST"])
+# @app.route("/aski", methods=["POST"])
+@app.route("https://chat-with-database-api.vercel.app/aski", methods=["POST"])
 def mysql_ask():
     global agents
     try:
