@@ -24,8 +24,10 @@ import Chatbot from '../Chatbot';
       element:<Landing/>
     },
     {
-      path: 'landing',
-      element: <Landing />
+      // path: 'landing',
+      // element: <Landing />
+      path: 'chatbot',
+      element: <Chatbot />
     },
   ]);
 
