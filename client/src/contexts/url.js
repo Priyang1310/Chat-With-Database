@@ -1,3 +1,3 @@
-const backend_url = "http://localhost:7000"
+const backend_url = "https://chat-with-database-api.vercel.app/"
 
 export {backend_url}
