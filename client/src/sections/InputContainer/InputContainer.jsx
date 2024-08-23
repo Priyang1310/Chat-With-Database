@@ -60,7 +60,8 @@ const InputContainer = ({ input, setInput, handleSend, theme }) => {
     }
     handleSend(query,true);
     setInput('');
-    const url = isMySQL ? 'http://127.0.0.1:5000/aski' : 'http://127.0.0.1:5000/ask';
+    // const url = isMySQL ? 'http://127.0.0.1:5000/aski' : 'http://127.0.0.1:5000/ask';
+    const url = isMySQL ? 'https://chat-with-database-api.vercel.app/aski' : 'https://chat-with-database-api.vercel.app/ask';
     try {
       const response = await fetch(url, {
         method: 'POST',
